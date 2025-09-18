@@ -92,7 +92,7 @@ export const Navbar = ({ onRegisterClick }: NavbarProps) => {
 
             {/* Register Button */}
             <Button 
-              className="bg-gradient-primary hover:opacity-90 text-white"
+              className="bg-gradient-primary hover:opacity-90 text-red-500"
               onClick={onRegisterClick}
             >
               Register for Alerts
@@ -159,7 +159,7 @@ export const Navbar = ({ onRegisterClick }: NavbarProps) => {
                   </DropdownMenu>
                 </div>
                 <Button 
-                  className="w-full bg-gradient-primary hover:opacity-90 text-white"
+                  className="w-full bg-gradient-primary hover:opacity-90 text-red-500"
                   onClick={onRegisterClick}
                 >
                   Register for Alerts
