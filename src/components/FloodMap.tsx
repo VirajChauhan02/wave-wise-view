@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Droplets, AlertTriangle, Cloud, Sun, CloudRain } from "lucide-react";
+import { WeatherMapModal } from "./WeatherMapModal";
 
 interface FloodZone {
   id: string;
@@ -67,19 +69,27 @@ const riskIcons = {
 };
 
 export function FloodMap() {
+  const [showWeatherMap, setShowWeatherMap] = useState(false);
+
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MapPin className="h-5 w-5" />
-            Current Weather & Flood Map
-          </div>
-          <Button variant="outline" size="sm" className="text-red-500">
-            View Full Map
-          </Button>
-        </CardTitle>
-      </CardHeader>
+    <>
+      <Card className="h-full">
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5" />
+              Current Weather & Flood Map
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="text-red-500"
+              onClick={() => setShowWeatherMap(true)}
+            >
+              View Full Map
+            </Button>
+          </CardTitle>
+        </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="bg-muted/50 rounded-lg p-4 mb-4">
@@ -115,7 +125,13 @@ export function FloodMap() {
             ))}
           </div>
         </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      {/* Weather Map Modal */}
+      {showWeatherMap && (
+        <WeatherMapModal onClose={() => setShowWeatherMap(false)} />
+      )}
+    </>
   );
 }
