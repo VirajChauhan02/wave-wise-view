@@ -52,7 +52,7 @@ const Index = () => {
       <Navbar onRegisterClick={() => setShowRegistrationForm(true)} />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section id="home" className="relative overflow-hidden">
         <div 
           className="h-80 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
@@ -68,7 +68,11 @@ const Index = () => {
                 to protect communities from flood disasters.
               </p>
               <div className="flex gap-3">
-                <Button variant="secondary" size="lg">
+                <Button 
+                  variant="secondary" 
+                  size="lg"
+                  onClick={() => document.getElementById('emergency-contacts')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   <Shield className="h-4 w-4" />
                   Emergency Info
                 </Button>
@@ -125,7 +129,7 @@ const Index = () => {
           {/* Left Column - Alerts and Map */}
           <div className="lg:col-span-2 space-y-6">
             {/* Current Alerts */}
-            <div>
+            <div id="alerts">
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                 <Waves className="h-6 w-6 text-water-primary" />
                 Current Flood Alerts
@@ -152,8 +156,10 @@ const Index = () => {
             <div id="emergency-contacts">
               <EmergencyContacts />
             </div>
-            <FloodPreparedness />
-            <Resources />
+            <div id="resources">
+              <FloodPreparedness />
+              <Resources />
+            </div>
           </div>
         </div>
 
