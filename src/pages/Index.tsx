@@ -9,6 +9,7 @@ import { FloodStats } from "@/components/FloodStats";
 import { FloodMap } from "@/components/FloodMap";
 import { EmergencyContacts } from "@/components/EmergencyContacts";
 import { FloodPreparedness } from "@/components/FloodPreparedness";
+import { Resources } from "@/components/Resources";
 import { Waves, AlertTriangle, Shield, RefreshCw } from "lucide-react";
 import heroImage from "@/assets/flood-hero.jpg";
 
@@ -71,7 +72,12 @@ const Index = () => {
                   <Shield className="h-4 w-4" />
                   Emergency Info
                 </Button>
-                <Button variant="outline" size="lg" className="border-white/20 text-red-500 hover:bg-white/10 hover:text-red-400">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-white/20 text-red-500 hover:bg-white/10 hover:text-red-400"
+                  onClick={() => document.getElementById('flood-map')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   View Map
                 </Button>
               </div>
@@ -136,15 +142,18 @@ const Index = () => {
             </div>
 
             {/* Flood Risk Map */}
-            <div>
+            <div id="flood-map">
               <FloodMap />
             </div>
           </div>
 
           {/* Right Column - Emergency Info and Preparedness */}
           <div className="space-y-6">
-            <EmergencyContacts />
+            <div id="emergency-contacts">
+              <EmergencyContacts />
+            </div>
             <FloodPreparedness />
+            <Resources />
           </div>
         </div>
 
@@ -152,7 +161,7 @@ const Index = () => {
         <footer className="mt-12 pt-8 border-t">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-sm text-muted-foreground">
-              <p>© 2024 FloodWatch System. Last updated: {new Date().toLocaleString()}</p>
+              <p>Last updated: {new Date().toLocaleString()}</p>
             </div>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="text-xs">

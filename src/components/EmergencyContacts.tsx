@@ -14,29 +14,29 @@ const contacts: Contact[] = [
   {
     name: "Emergency Response Center",
     role: "24/7 Flood Emergency",
-    phone: "911",
-    email: "emergency@floodwatch.gov",
+    phone: "112",
+    email: "emergency@ndrf.gov.in",
     priority: "emergency"
   },
   {
-    name: "Flood Warning Service",
-    role: "Early Warning System",
-    phone: "(555) 123-FLOOD", 
-    email: "warnings@floodwatch.gov",
+    name: "National Disaster Response Force",
+    role: "Disaster Management",
+    phone: "011-26701700", 
+    email: "control@ndrf.gov.in",
     priority: "urgent"
   },
   {
     name: "Public Works Department",
     role: "Infrastructure Support",
-    phone: "(555) 456-7890",
-    email: "works@city.gov",
+    phone: "1077",
+    email: "pwd@gov.in",
     priority: "general"
   },
   {
-    name: "Red Cross Disaster Relief",
+    name: "Indian Red Cross Society",
     role: "Emergency Assistance",
-    phone: "(555) 987-6543",
-    email: "help@redcross.local",
+    phone: "011-23711131",
+    email: "redcross@ircs.org",
     priority: "urgent"
   }
 ];

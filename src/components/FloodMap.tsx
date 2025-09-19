@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Droplets, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MapPin, Droplets, AlertTriangle, Cloud, Sun, CloudRain } from "lucide-react";
 
 interface FloodZone {
   id: string;
@@ -8,6 +9,8 @@ interface FloodZone {
   riskLevel: "low" | "moderate" | "high" | "critical";
   waterLevel: string;
   lastUpdate: string;
+  weather: string;
+  temperature: string;
 }
 
 const zones: FloodZone[] = [
@@ -16,28 +19,36 @@ const zones: FloodZone[] = [
     name: "Downtown River District",
     riskLevel: "moderate",
     waterLevel: "4.2m",
-    lastUpdate: "2 min ago"
+    lastUpdate: "2 min ago",
+    weather: "Cloudy",
+    temperature: "28°C"
   },
   {
     id: "2", 
     name: "Industrial Zone East",
     riskLevel: "low",
     waterLevel: "2.8m",
-    lastUpdate: "5 min ago"
+    lastUpdate: "5 min ago",
+    weather: "Sunny",
+    temperature: "32°C"
   },
   {
     id: "3",
     name: "Residential Area North",
     riskLevel: "high",
     waterLevel: "6.1m", 
-    lastUpdate: "1 min ago"
+    lastUpdate: "1 min ago",
+    weather: "Heavy Rain",
+    temperature: "25°C"
   },
   {
     id: "4",
     name: "Agricultural Valley",
     riskLevel: "critical",
     waterLevel: "8.3m",
-    lastUpdate: "Just now"
+    lastUpdate: "Just now",
+    weather: "Thunderstorm",
+    temperature: "24°C"
   }
 ];
 
@@ -59,16 +70,21 @@ export function FloodMap() {
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MapPin className="h-5 w-5" />
-          Flood Risk Areas
+        <CardTitle className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-5 w-5" />
+            Current Weather & Flood Map
+          </div>
+          <Button variant="outline" size="sm" className="text-red-500">
+            View Full Map
+          </Button>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="bg-muted/50 rounded-lg p-4 mb-4">
             <p className="text-sm text-muted-foreground text-center">
-              Interactive flood monitoring map showing real-time water levels and risk assessments
+              Real-time weather conditions and flood monitoring with water levels and risk assessments
             </p>
           </div>
           
@@ -85,7 +101,10 @@ export function FloodMap() {
                   <div>
                     <p className="font-medium text-sm">{zone.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      Water Level: {zone.waterLevel} • {zone.lastUpdate}
+                      Water: {zone.waterLevel} • {zone.weather} • {zone.temperature}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Updated: {zone.lastUpdate}
                     </p>
                   </div>
                 </div>

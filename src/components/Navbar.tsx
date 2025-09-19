@@ -10,10 +10,13 @@ import { Globe, Menu, X, AlertTriangle, Home, Phone, BookOpen } from "lucide-rea
 
 const languages = [
   { code: 'en', name: 'English' },
-  { code: 'es', name: 'Español' },
-  { code: 'fr', name: 'Français' },
-  { code: 'de', name: 'Deutsch' },
-  { code: 'zh', name: '中文' },
+  { code: 'hi', name: 'हिन्दी' },
+  { code: 'bn', name: 'বাংলা' },
+  { code: 'te', name: 'తెలుగు' },
+  { code: 'mr', name: 'मराठी' },
+  { code: 'ta', name: 'தமிழ்' },
+  { code: 'gu', name: 'ગુજરાતી' },
+  { code: 'kn', name: 'ಕನ್ನಡ' },
 ];
 
 interface NavbarProps {
@@ -56,6 +59,12 @@ export const Navbar = ({ onRegisterClick }: NavbarProps) => {
                 key={item.name}
                 href={item.href}
                 className="flex items-center space-x-1 text-muted-foreground hover:text-primary transition-colors duration-200"
+                onClick={(e) => {
+                  if (item.name === 'Emergency') {
+                    e.preventDefault();
+                    document.getElementById('emergency-contacts')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
               >
                 <item.icon className="w-4 h-4" />
                 <span>{item.name}</span>
@@ -124,7 +133,13 @@ export const Navbar = ({ onRegisterClick }: NavbarProps) => {
                   key={item.name}
                   href={item.href}
                   className="flex items-center space-x-2 px-3 py-2 text-muted-foreground hover:text-primary hover:bg-muted rounded-md transition-colors duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    setIsMobileMenuOpen(false);
+                    if (item.name === 'Emergency') {
+                      e.preventDefault();
+                      document.getElementById('emergency-contacts')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                 >
                   <item.icon className="w-4 h-4" />
                   <span>{item.name}</span>

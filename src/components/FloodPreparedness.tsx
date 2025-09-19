@@ -105,7 +105,21 @@ export function FloodPreparedness() {
           </div>
           
           <div className="pt-4 border-t">
-            <Button variant="water" size="sm" className="w-full">
+            <Button 
+              variant="water" 
+              size="sm" 
+              className="w-full"
+              onClick={() => {
+                const element = document.createElement('a');
+                const file = new Blob(['EMERGENCY FLOOD GUIDE\n\n1. Emergency Kit Checklist\n- Water (1 gallon per person per day)\n- Non-perishable food (3-day supply)\n- Flashlight and extra batteries\n- First aid kit\n- Medications\n- Important documents in waterproof container\n\n2. Evacuation Plan\n- Know your evacuation routes\n- Identify higher ground locations\n- Keep vehicle fueled\n- Have emergency meeting points\n\n3. During a Flood\n- Move to higher ground immediately\n- Avoid walking/driving through flood water\n- Stay away from downed power lines\n- Listen to emergency broadcasts\n\n4. After a Flood\n- Return only when authorities say it is safe\n- Avoid flood water - it may be contaminated\n- Document damage with photos\n- Contact insurance company\n\nEmergency Contacts:\n- Emergency Services: 112\n- NDRF: 011-26701700\n- Local Emergency: 1077'], 
+                  { type: 'text/plain' });
+                element.href = URL.createObjectURL(file);
+                element.download = 'Emergency_Flood_Guide.txt';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+              }}
+            >
               Download Full Emergency Guide
             </Button>
           </div>
