@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      user_registrations: {
+        Row: {
+          alert_critical: boolean | null
+          alert_safe: boolean | null
+          alert_warning: boolean | null
+          created_at: string
+          email: string
+          id: string
+          location: string
+          name: string
+          notification_email: boolean | null
+          notification_push: boolean | null
+          notification_sms: boolean | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          alert_critical?: boolean | null
+          alert_safe?: boolean | null
+          alert_warning?: boolean | null
+          created_at?: string
+          email: string
+          id?: string
+          location: string
+          name: string
+          notification_email?: boolean | null
+          notification_push?: boolean | null
+          notification_sms?: boolean | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          alert_critical?: boolean | null
+          alert_safe?: boolean | null
+          alert_warning?: boolean | null
+          created_at?: string
+          email?: string
+          id?: string
+          location?: string
+          name?: string
+          notification_email?: boolean | null
+          notification_push?: boolean | null
+          notification_sms?: boolean | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
