@@ -5,8 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X, Phone, Mail, MapPin } from "lucide-react";
+import { X, Phone, Mail, MapPin, User, Map } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface RegistrationFormProps {
   onClose: () => void;
@@ -18,6 +19,7 @@ export const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
     email: "",
     phone: "",
     location: "",
+    state: "",
     notificationTypes: {
       email: false,
       sms: false,
@@ -32,54 +34,133 @@ export const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
 
   const { toast } = useToast();
 
-  const locations = [
-    "Agricultural Valley",
-    "Residential Area North", 
-    "Industrial Zone East",
-    "Downtown District",
-    "Riverside Community",
-    "Highland Suburbs",
-    "Coastal Region"
+  const indianStates = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
+    "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+    "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const locations = [
+    "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", 
+    "Pune", "Ahmedabad", "Surat", "Jaipur", "Lucknow", "Kanpur", 
+    "Nagpur", "Visakhapatnam", "Indore", "Thane", "Bhopal", "Patna",
+    "Vadodara", "Ghaziabad", "Ludhiana", "Coimbatore", "Agra", "Madurai"
+  ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.name || !formData.email || !formData.location) {
+    if (!formData.name || !formData.email || !formData.location || !formData.state) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive"
+        title: "Error",
+        description: "Please fill in all required fields including state.",
+        variant: "destructive",
       });
       return;
     }
 
-    if (!formData.notificationTypes.email && !formData.notificationTypes.sms && !formData.notificationTypes.push) {
+    if (!formData.email.includes('@')) {
       toast({
-        title: "Notification Method Required", 
-        description: "Please select at least one notification method.",
-        variant: "destructive"
+        title: "Error",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
       });
       return;
     }
 
-    // Simulate registration
-    toast({
-      title: "Registration Successful!",
-      description: `Welcome ${formData.name}! You'll receive flood alerts for ${formData.location}.`,
-    });
+    try {
+      // Save to database
+      const { error: dbError } = await supabase
+        .from('user_registrations')
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || null,
+          location: formData.location,
+          notification_email: formData.notificationTypes.email,
+          notification_sms: formData.notificationTypes.sms,
+          notification_push: formData.notificationTypes.push,
+          alert_critical: formData.alertLevels.critical,
+          alert_warning: formData.alertLevels.warning,
+          alert_safe: formData.alertLevels.safe,
+        });
 
-    // Reset form and close
-    setFormData({
-      name: "",
-      email: "", 
-      phone: "",
-      location: "",
-      notificationTypes: { email: false, sms: false, push: false },
-      alertLevels: { critical: true, warning: false, safe: false }
-    });
-    onClose();
+      if (dbError) {
+        console.error('Database error:', dbError);
+        toast({
+          title: "Error",
+          description: "Failed to save registration. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Send confirmation email
+      const notificationPreferences = Object.entries(formData.notificationTypes)
+        .filter(([_, enabled]) => enabled)
+        .map(([type, _]) => type.charAt(0).toUpperCase() + type.slice(1));
+      
+      const alertLevels = Object.entries(formData.alertLevels)
+        .filter(([_, enabled]) => enabled)
+        .map(([level, _]) => level.charAt(0).toUpperCase() + level.slice(1));
+
+      const { error: emailError } = await supabase.functions.invoke('send-registration-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          location: formData.location,
+          state: formData.state,
+          notificationPreferences,
+          alertLevels
+        }
+      });
+
+      if (emailError) {
+        console.error('Email error:', emailError);
+        // Don't show error to user as registration was successful
+      }
+
+      toast({
+        title: "Registration Successful!",
+        description: "You have been registered for flood alerts. Check your email for confirmation.",
+      });
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        location: "",
+        state: "",
+        notificationTypes: {
+          email: false,
+          sms: false,
+          push: false
+        },
+        alertLevels: {
+          critical: true,
+          warning: false,
+          safe: false
+        }
+      });
+
+      // Close modal after success
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    } catch (error) {
+      console.error('Registration error:', error);
+      toast({
+        title: "Error",
+        description: "Registration failed. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -115,7 +196,10 @@ export const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
               </h3>
               
               <div>
-                <Label htmlFor="name">Full Name *</Label>
+                <Label htmlFor="name" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Full Name *
+                </Label>
                 <Input
                   id="name"
                   type="text"
@@ -157,22 +241,42 @@ export const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
               </div>
 
               <div>
-                <Label htmlFor="location">Location *</Label>
-                <div className="relative mt-1">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
-                  <Select value={formData.location} onValueChange={(value) => handleInputChange('location', value)}>
-                    <SelectTrigger className="pl-10">
-                      <SelectValue placeholder="Select your area" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {locations.map((location) => (
-                        <SelectItem key={location} value={location}>
-                          {location}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <Label htmlFor="location" className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  City *
+                </Label>
+                <Select value={formData.location} onValueChange={(value) => handleInputChange('location', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your city" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {locations.map((location) => (
+                      <SelectItem key={location} value={location}>
+                        {location}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* State Selection */}
+              <div>
+                <Label htmlFor="state" className="flex items-center gap-2">
+                  <Map className="h-4 w-4" />
+                  State *
+                </Label>
+                <Select value={formData.state} onValueChange={(value) => handleInputChange('state', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {indianStates.map((state) => (
+                      <SelectItem key={state} value={state}>
+                        {state}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 

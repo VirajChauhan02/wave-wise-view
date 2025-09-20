@@ -54,95 +54,14 @@ export const WeatherMapModal = ({ onClose }: WeatherMapModalProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Map Area */}
             <div className="lg:col-span-2">
-              <div className="relative bg-gradient-to-br from-blue-50 to-green-50 rounded-lg h-96 lg:h-[500px] overflow-hidden border">
-                {/* India Map Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-yellow-50 to-blue-100">
-                  <div className="absolute inset-0 opacity-20">
-                    <svg viewBox="0 0 400 300" className="w-full h-full">
-                      {/* Simplified India outline */}
-                      <path
-                        d="M80 80 L100 60 L140 70 L180 65 L220 75 L250 90 L280 110 L300 140 L310 180 L300 220 L280 250 L240 260 L200 255 L160 240 L120 220 L90 190 L85 150 Z"
-                        fill="rgba(34, 197, 94, 0.3)"
-                        stroke="rgba(34, 197, 94, 0.6)"
-                        strokeWidth="2"
-                      />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Weather Points */}
-                {indianStates.map((state, index) => {
-                  const WeatherIcon = getWeatherIcon(state.weather);
-                  return (
-                    <div
-                      key={state.name}
-                      className="absolute cursor-pointer transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-transform"
-                      style={{
-                        left: `${20 + (index % 3) * 25 + Math.random() * 20}%`,
-                        top: `${20 + Math.floor(index / 3) * 25 + Math.random() * 15}%`
-                      }}
-                      onClick={() => setSelectedState(state)}
-                    >
-                      <div className="relative">
-                        <div className="bg-white rounded-full p-2 shadow-lg border-2 border-primary/20">
-                          <WeatherIcon className="h-4 w-4 text-primary" />
-                        </div>
-                        <Badge 
-                          className={`absolute -bottom-2 -right-2 text-xs ${getFloodColor(state.flood)}`}
-                          variant="secondary"
-                        >
-                          {state.flood}
-                        </Badge>
-                      </div>
-                    </div>
-                  );
-                })}
-
-                {/* Weather Legend */}
-                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-3">
-                  <h4 className="text-sm font-semibold mb-2">Weather Legend</h4>
-                  <div className="space-y-1 text-xs">
-                    <div className="flex items-center gap-2">
-                      <Sun className="h-3 w-3 text-yellow-500" />
-                      <span>Sunny</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Cloud className="h-3 w-3 text-gray-500" />
-                      <span>Cloudy</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CloudRain className="h-3 w-3 text-blue-600" />
-                      <span>Rain</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Zap className="h-3 w-3 text-purple-600" />
-                      <span>Storm</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Flood Risk Legend */}
-                <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3">
-                  <h4 className="text-sm font-semibold mb-2">Flood Risk</h4>
-                  <div className="space-y-1 text-xs">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded bg-success"></div>
-                      <span>Low</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded bg-accent"></div>
-                      <span>Moderate</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded bg-warning"></div>
-                      <span>High</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded bg-destructive"></div>
-                      <span>Critical</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="relative rounded-lg h-96 lg:h-[500px] overflow-hidden border">
+                {/* Zoom.earth iframe */}
+                <iframe
+                  src="https://zoom.earth/"
+                  className="w-full h-full border-0"
+                  title="Global Weather Map - Zoom.earth"
+                  allow="geolocation"
+                />
               </div>
             </div>
 
