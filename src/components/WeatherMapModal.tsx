@@ -54,14 +54,34 @@ export const WeatherMapModal = ({ onClose }: WeatherMapModalProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Map Area */}
             <div className="lg:col-span-2">
-              <div className="relative rounded-lg h-96 lg:h-[500px] overflow-hidden border">
-                {/* Zoom.earth iframe */}
+              <div className="relative rounded-lg h-96 lg:h-[500px] overflow-hidden border bg-slate-50">
+                {/* Zoom.earth iframe with proper sandbox and referrer policy */}
                 <iframe
-                  src="https://zoom.earth/"
+                  src="https://zoom.earth/maps/wind/#view=19.0760,72.8777,5z/date=2024-01-21,12:00,+05:30"
                   className="w-full h-full border-0"
                   title="Global Weather Map - Zoom.earth"
-                  allow="geolocation"
+                  allow="geolocation; fullscreen"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  loading="lazy"
                 />
+                
+                {/* Fallback content */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <div className="text-center p-4">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      If the map doesn't load, click below to open in a new tab
+                    </p>
+                    <a 
+                      href="https://zoom.earth/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                    >
+                      Open Zoom.earth Map
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
