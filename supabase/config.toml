@@ -70,3 +70,6 @@ verify_jwt = false
 
 [functions.send-location-alerts]
 verify_jwt = false
+
+[functions.weather-monitor]
+verify_jwt = false

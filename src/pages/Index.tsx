@@ -12,6 +12,7 @@ import { FloodPreparedness } from "@/components/FloodPreparedness";
 import { Resources } from "@/components/Resources";
 import { Waves, AlertTriangle, Shield, RefreshCw, X } from "lucide-react";
 import heroImage from "@/assets/flood-hero.jpg";
+import { WeatherMonitor } from "@/components/WeatherMonitor";
 import { AlertTrigger } from "@/components/AlertTrigger";
 
 const currentAlerts: FloodAlertData[] = [
