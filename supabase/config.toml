@@ -67,3 +67,6 @@ template = "Your code is {{ .Code }}"
 
 [functions.send-registration-email]
 verify_jwt = false
+
+[functions.send-location-alerts]
+verify_jwt = false

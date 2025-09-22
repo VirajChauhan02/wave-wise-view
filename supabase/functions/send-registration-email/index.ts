@@ -30,7 +30,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('Sending registration email to:', email);
 
     const emailResponse = await resend.emails.send({
-      from: "FloodWatch System <onboarding@resend.dev>",
+      from: "FloodWatch System <noreply@resend.dev>",
       to: [email],
       subject: "Registration Confirmed - FloodWatch Alert System",
       html: `

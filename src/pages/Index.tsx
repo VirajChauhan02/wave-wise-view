@@ -10,8 +10,9 @@ import { FloodMap } from "@/components/FloodMap";
 import { EmergencyContacts } from "@/components/EmergencyContacts";
 import { FloodPreparedness } from "@/components/FloodPreparedness";
 import { Resources } from "@/components/Resources";
-import { Waves, AlertTriangle, Shield, RefreshCw } from "lucide-react";
+import { Waves, AlertTriangle, Shield, RefreshCw, X } from "lucide-react";
 import heroImage from "@/assets/flood-hero.jpg";
+import { AlertTrigger } from "@/components/AlertTrigger";
 
 const currentAlerts: FloodAlertData[] = [
   {
@@ -43,6 +44,7 @@ const currentAlerts: FloodAlertData[] = [
 const Index = () => {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [selectedAlert, setSelectedAlert] = useState<FloodAlertData | null>(null);
+  const [showAlertTrigger, setShowAlertTrigger] = useState(false);
 
   const handleAlertClick = (alert: FloodAlertData) => {
     setSelectedAlert(alert);
@@ -67,22 +69,19 @@ const Index = () => {
                 Real-time water level monitoring, early warning alerts, and emergency response coordination 
                 to protect communities from flood disasters.
               </p>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
-                  variant="secondary" 
-                  size="lg"
-                  onClick={() => document.getElementById('emergency-contacts')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => setShowRegistrationForm(true)}
+                  className="bg-gradient-water text-white hover:opacity-90 px-8 py-3 rounded-lg font-semibold text-lg shadow-lg"
                 >
-                  <Shield className="h-4 w-4" />
-                  Emergency Info
+                  Get Flood Alerts
                 </Button>
                 <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-white/20 text-red-500 hover:bg-white/10 hover:text-red-400"
-                  onClick={() => document.getElementById('flood-map')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => setShowAlertTrigger(true)}
+                  variant="outline"
+                  className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-lg font-semibold text-lg shadow-lg"
                 >
-                  View Map
+                  Send Alert
                 </Button>
               </div>
             </div>
@@ -185,7 +184,23 @@ const Index = () => {
       {showRegistrationForm && (
         <RegistrationForm onClose={() => setShowRegistrationForm(false)} />
       )}
-      
+
+      {showAlertTrigger && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setShowAlertTrigger(false)}
+              className="absolute -top-2 -right-2 z-10 bg-white rounded-full shadow-lg"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            <AlertTrigger onClose={() => setShowAlertTrigger(false)} />
+          </div>
+        </div>
+      )}
+
       {selectedAlert && (
         <AlertDetailsModal 
           alert={selectedAlert} 
