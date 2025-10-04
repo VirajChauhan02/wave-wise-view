@@ -64,18 +64,18 @@ const Index = () => {
           <div className="relative container mx-auto px-4 h-full flex items-center">
             <div className="max-w-2xl text-white">
               <h1 className="text-4xl font-bold mb-4">
-                Advanced Flood Monitoring & Alert System
+                Advanced Weather Forecasting & Flood Monitoring Alert System
               </h1>
               <p className="text-lg mb-6 text-white/90">
-                Real-time water level monitoring, early warning alerts, and emergency response coordination 
-                to protect communities from flood disasters.
+                Real-time weather forecasting and flood monitoring with early warning alerts and emergency 
+                response coordination to protect communities from disasters.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={() => setShowRegistrationForm(true)}
                   className="bg-gradient-water text-white hover:opacity-90 px-8 py-3 rounded-lg font-semibold text-lg shadow-lg"
                 >
-                  Get Flood Alerts
+                  Get Weather Alerts
                 </Button>
                 <Button 
                   onClick={() => setShowAlertTrigger(true)}
