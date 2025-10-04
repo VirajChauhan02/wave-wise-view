@@ -30,14 +30,14 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('Sending registration email to:', email);
 
     const emailResponse = await resend.emails.send({
-      from: "FloodWatch System <noreply@resend.dev>",
+      from: "Weather Forecasting System <onboarding@resend.dev>",
       to: [email],
-      subject: "Registration Confirmed - FloodWatch Alert System",
+      subject: "Registration Confirmed - Weather Alert System",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background: linear-gradient(135deg, #0ea5e9, #0284c7); padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
-            <h1 style="color: white; margin: 0; font-size: 28px;">🌊 FloodWatch System</h1>
-            <p style="color: white; margin: 10px 0 0 0; font-size: 16px;">Advanced Flood Monitoring & Alert System</p>
+            <h1 style="color: white; margin: 0; font-size: 28px;">🌤️ Weather Forecasting System</h1>
+            <p style="color: white; margin: 10px 0 0 0; font-size: 16px;">Advanced Weather Forecasting & Flood Monitoring Alert System</p>
           </div>
           
           <div style="background: #f8fafc; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
@@ -60,20 +60,20 @@ const handler = async (req: Request): Promise<Response> => {
             
             <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin: 20px 0;">
               <p style="color: #92400e; margin: 0;">
-                <strong>⚠️ Important:</strong> You will now receive flood alerts based on your selected preferences. 
+                <strong>⚠️ Important:</strong> You will now receive weather and flood alerts based on your selected preferences. 
                 Stay safe and follow emergency protocols when alerts are issued.
               </p>
             </div>
             
             <p style="color: #475569; line-height: 1.6;">
-              Our system monitors water levels 24/7 and will send you timely alerts to help keep you and your community safe.
+              Our system monitors weather conditions and water levels 24/7 to send you timely alerts and help keep you and your community safe.
             </p>
           </div>
           
           <div style="text-align: center; padding: 20px 0;">
             <div style="background: #1e293b; color: white; padding: 20px; border-radius: 8px;">
               <p style="margin: 0; font-size: 14px;">
-                © 2024 FloodWatch System | Advanced Flood Monitoring & Alert System
+                © 2024 Weather Forecasting System | Advanced Weather Forecasting & Flood Monitoring Alert System
               </p>
               <p style="margin: 10px 0 0 0; font-size: 12px; opacity: 0.8;">
                 This is an automated message. Please do not reply to this email.

@@ -91,13 +91,13 @@ const handler = async (req: Request): Promise<Response> => {
                           alertLevel === 'warning' ? '⚠️' : '✅';
 
           const emailResponse = await resend.emails.send({
-            from: "FloodWatch System <noreply@resend.dev>",
+            from: "Weather Forecasting System <onboarding@resend.dev>",
             to: [registration.email],
-            subject: `${alertIcon} ${alertLevel.toUpperCase()} FLOOD ALERT - ${registration.location}`,
+            subject: `${alertIcon} ${alertLevel.toUpperCase()} WEATHER ALERT - ${registration.location}`,
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
                 <div style="background: ${alertColor}; padding: 25px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
-                  <h1 style="color: white; margin: 0; font-size: 24px;">${alertIcon} FLOOD ALERT</h1>
+                  <h1 style="color: white; margin: 0; font-size: 24px;">${alertIcon} WEATHER ALERT</h1>
                   <p style="color: white; margin: 10px 0 0 0; font-size: 18px; font-weight: bold;">
                     ${alertLevel.toUpperCase()} - ${registration.location}
                   </p>
@@ -137,7 +137,7 @@ const handler = async (req: Request): Promise<Response> => {
                 <div style="text-align: center; padding: 20px 0;">
                   <div style="background: #1e293b; color: white; padding: 15px; border-radius: 8px;">
                     <p style="margin: 0; font-size: 12px;">
-                      © 2024 FloodWatch System | Emergency Alert: ${new Date().toLocaleString()}
+                      © 2024 Weather Forecasting System | Emergency Alert: ${new Date().toLocaleString()}
                     </p>
                   </div>
                 </div>
